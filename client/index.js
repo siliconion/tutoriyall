@@ -1,18 +1,23 @@
 // src/index.js
-var m = require("mithril")
+const m = require("mithril")
 
-var Login = require("./views/Login")
-var UserList = require("./views/UserList")
-var TutorialForm = require("./views/TutorialForm")
-// var TutorialList = require("./views/TutorialList")
-var Layout = require("./views/Layout")
+const Login = require("./views/Login")
+const UserList = require("./views/UserList")
+const TutorialForm = require("./views/TutorialForm")
+// const TutorialList = require("./views/TutorialList")
+const Layout = require("./views/Layout")
 
-var isLoggedIn = false
+const getCookie = () => {
+    var cookieString = document.cookie;
+
+}
+const isLoggedIn = ()=>{
+    var ca = document.cookie.split(';');
+}
 
 m.route(document.body, "/", {
     "/": {
         onmatch: function () {
-            console.log("RENDER HERE?")
             if (!isLoggedIn) m.route.set("/login")
             return m(Layout, m('h1', "HOME"))
         }
