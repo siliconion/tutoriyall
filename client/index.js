@@ -2,39 +2,44 @@
 const m = require("mithril")
 
 const Login = require("./views/Login")
-const UserList = require("./views/UserList")
+const User = require("./views/User")
 const TutorialForm = require("./views/TutorialForm")
 // const TutorialList = require("./views/TutorialList")
 const Layout = require("./views/Layout")
-
-const getCookie = () => {
-    var cookieString = document.cookie;
-
-}
-const isLoggedIn = ()=>{
-    var ca = document.cookie.split(';');
-}
+const UserModel = require("./models/User")
 
 m.route(document.body, "/", {
     "/": {
         onmatch: function () {
-            if (!isLoggedIn) m.route.set("/login")
-            return m(Layout, m('h1', "HOME"))
+            console.log("root fe view")
+            if (UserModel.isLoggedIn()) {
+                m.route.set('/user/' + UserModel.id)
+            }
+            else {
+                UserModel.getUserInfo().then((data) => {
+                    if (data)
+                        m.route.set("/")
+                    else
+                        m.route.set("/login")
+                })
+            }
         }
     },
     "/login": {
         render: function () {
+            console.log("login fe view")
             return m(Layout, m(Login))
         }
     },
-    "/list1": {
+    "/user/:id": {
         render: function () {
-            return m(Layout, m(UserList))
-        }
-    },
-    "/list": {
-        render: function () {
-            return m('h1', "why why why?")
+            console.log("user fe view")
+            if (!UserModel.isLoggedIn()) {
+                m.route.set("/")
+            }
+            else {
+                return m(Layout, m(User))
+            }
         }
     },
     "/tutorial/:id": {
@@ -44,27 +49,3 @@ m.route(document.body, "/", {
     },
 })
 
-// var isLoggedIn = false
-//
-// var Login = {
-//     view: function() {
-//         return m("form", [
-//             m("button[type=button]", {
-//                 onclick: function() {
-//                     isLoggedIn = true
-//                     m.route.set("/secret")
-//                 }
-//             }, "Login")
-//         ])
-//     }
-// }
-//
-// m.route(document.body, "/secret", {
-//     "/secret": {
-//         onmatch: function() {
-//             if (!isLoggedIn) m.route.set("/login")
-//             else return Home
-//         }
-//     },
-//     "/login": Login
-// })

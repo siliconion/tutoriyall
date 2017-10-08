@@ -1,39 +1,36 @@
-// src/models/User.js
 var m = require("mithril")
 
 var User = {
-  list: [],
-  loadList: function() {
-    return m.request({
-      method: "GET",
-      url: "https://rem-rest-api.herokuapp.com/api/users",
-      withCredentials: true,
-    })
-      .then(function(result) {
-        User.list = result.data
-      })
-  },
+    id: null,
+    isLoggedIn: function () {
+        return this.id && this.username
+    },
+    username: null,
+    avatar: null,
+    tutorialList: [],
+    tagList: [],
+    getUserInfo: function () {
+        console.log("get user info")
+        return m.request({
+            method: "GET",
+            url: "/getUserInfo",
+            withCredentials: true,
+        }).then((data) => {
+            console.log("got from get user info", data)
+            this.id = data.id
+            this.username = data.username
+            this.avatar = data.avatar
+            this.tutorialList = data.tutorialList
+            this.tagList = data.tagList
+            return true
+        }).catch((err) => {
+            console.log(err)
+            return false
+        })
+    },
+    getAllUsers: function () {
 
-  current: {},
-  load: function(id) {
-    return m.request({
-      method: "GET",
-      url: "https://rem-rest-api.herokuapp.com/api/users/" + id,
-      withCredentials: true,
-    })
-      .then(function(result) {
-        User.current = result
-      })
-  },
-
-  save: function() {
-    return m.request({
-      method: "PUT",
-      url: "https://rem-rest-api.herokuapp.com/api/users/" + User.current.id,
-      data: User.current,
-      withCredentials: true,
-    })
-  }
+    },
 }
 
 module.exports = User
