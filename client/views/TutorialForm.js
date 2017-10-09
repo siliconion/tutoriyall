@@ -1,27 +1,37 @@
 // src/views/UserForm.js
 var m = require("mithril")
-var User = require("../models/User")
 
+var tutorial = {}
 module.exports = {
-  oninit: function(vnode) {User.load(vnode.attrs.id)},
-  view: function() {
-    return m("form", {
-      onsubmit: function(e) {
-        e.preventDefault()
-        User.save()
-      }
-    }, [
-      m("label.label", "First name"),
-      m("input.input[type=text][placeholder=First name]", {
-        oninput: m.withAttr("value", function(value) {User.current.firstName = value}),
-        value: User.current.firstName
-      }),
-      m("label.label", "Last name"),
-      m("input.input[placeholder=Last name]", {
-        oninput: m.withAttr("value", function(value) {User.current.lastName = value}),
-        value: User.current.lastName
-      }),
-      m("button.button[type=submit]", "Save"),
-    ])
-  }
+    oninit: function(vnode) {
+        // User.load(vnode.attrs.id)
+        tutorial = {}
+    },
+    view: function () {
+        return m("form", {
+            onsubmit: function (e) {
+                e.preventDefault()
+                console.log(tutorial)
+                // save tutorial
+                // clear tutorial
+                tutorial = {}
+            }
+        }, [
+            m("label.label", "Link"),
+            m("input.input[type=text][placeholder=Link URL]", {
+                oninput: m.withAttr("value", function (value) {
+                    tutorial.url = value
+                }),
+                value: tutorial.url
+            }),
+            m("label.label", "Tag"),
+            m("input.input[placeholder=Tag]", {
+                oninput: m.withAttr("value", function (value) {
+                    tutorial.tag = value
+                }),
+                value: tutorial.tag
+            }),
+            m("button.button[type=submit]", "Save"),
+        ])
+    }
 }

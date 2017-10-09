@@ -1,11 +1,12 @@
-// src/views/UserList.js
 var m = require("mithril")
+var TurotialForm = require("./TutorialForm")
+var TurotialList = require("./TutorialList")
 var User = require("../models/User")
 
 module.exports = {
     view: function () {
         return m(".user", [
-            m('.tutorial-form', 'create new link'),
+            m(TurotialForm),
             m('.tutorial-form', 'Tutorial list'),
             ]
         )

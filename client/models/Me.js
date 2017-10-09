@@ -1,6 +1,6 @@
 var m = require("mithril")
 
-var User = {
+var Me = {
     id: null,
     isLoggedIn: function () {
         return this.id && this.username
@@ -22,23 +22,11 @@ var User = {
             this.avatar = data.avatar
             this.tutorialList = data.tutorialList
             this.tagList = data.tagList
-            return true
+            return data
         }).catch((err) => {
             console.log(err)
-            return false
         })
     },
-    getAllUsers: function () {
-
-    },
-    addTutorial: function(tutorial){
-        return m.request({
-            method: "PUT",
-            url: "/tutorial/" + User.current.id,
-            data: tutorial,
-            withCredentials: true,
-        })
-    }
 }
 
-module.exports = User
+module.exports = Me

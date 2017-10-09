@@ -2,3 +2,5 @@
 static/app.js
 .idea
 node_modules
+/venv
+*.pyc

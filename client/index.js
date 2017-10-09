@@ -6,19 +6,19 @@ const User = require("./views/User")
 const TutorialForm = require("./views/TutorialForm")
 // const TutorialList = require("./views/TutorialList")
 const Layout = require("./views/Layout")
-const UserModel = require("./models/User")
+const Me = require("./models/Me")
 
 m.route(document.body, "/", {
     "/": {
         onmatch: function () {
             console.log("root fe view")
-            if (UserModel.isLoggedIn()) {
-                m.route.set('/user/' + UserModel.id)
+            if (Me.isLoggedIn()) {
+                m.route.set('/user/' + Me.id)
             }
             else {
-                UserModel.getUserInfo().then((data) => {
-                    if (data)
-                        m.route.set("/")
+                Me.getUserInfo().then(() => {
+                    if (Me.isLoggedIn())
+                        m.route.set('/user/' + Me.id)
                     else
                         m.route.set("/login")
                 })
@@ -34,7 +34,8 @@ m.route(document.body, "/", {
     "/user/:id": {
         render: function () {
             console.log("user fe view")
-            if (!UserModel.isLoggedIn()) {
+            // if (!Me.isLoggedIn()) {
+            if (false) {
                 m.route.set("/")
             }
             else {
@@ -47,5 +48,15 @@ m.route(document.body, "/", {
             return m(Layout, m(TutorialForm, vnode.attrs))
         }
     },
+    "/me":{
+        render: function () {
+            console.log("MEEEEE")
+            Me.getUserInfo().then(()=>{
+                console.log("MEEEEE")
+                console.log(Me.username)
+                return m('h1', Me.username)
+            })
+        }
+    }
 })
 
