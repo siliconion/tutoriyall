@@ -9,20 +9,19 @@ var Me = {
     avatar: null,
     tutorialList: [],
     tagList: [],
-    getUserInfo: function () {
-        console.log("get user info")
+    get: function () {
+        console.log("get user info", this)
         return m.request({
             method: "GET",
             url: "/me",
             withCredentials: true,
         }).then((data) => {
             console.log("got from get user info", data)
-            this.id = data.id
-            this.username = data.username
-            this.avatar = data.avatar
-            this.tutorialList = data.tutorialList
-            this.tagList = data.tagList
-            return data
+            Me.id = data.id
+            Me.username = data.username
+            Me.avatar = data.avatar
+            Me.tutorialList = data.tutorialList
+            Me.tagList = data.tagList
         }).catch((err) => {
             console.log(err)
         })

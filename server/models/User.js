@@ -1,3 +1,0 @@
-User = {}
-
-module.exports = User

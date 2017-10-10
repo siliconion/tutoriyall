@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, session, request, jsonify, g
+from flask import Flask, make_response, redirect, url_for, session, request, jsonify, g
 from flask_oauth import OAuth
 from os import environ
 
@@ -47,6 +47,16 @@ def js():
     return app.send_static_file('app.js')
 
 
+@app.route('/user/')
+def user():
+    id = request.args.get('id')
+    data = {
+        'username': 'user {}'.format(id),
+        'tutorials': [{'url': 'url1', 'tag': ['a', 'b', 'c']}, {'url': 'url2', 'tag': ['a2', 'b2', 'c']}]
+    }
+    return jsonify(data)
+
+
 @app.route('/me')
 def me():
     print g.user
@@ -55,9 +65,8 @@ def me():
     return jsonify(g.user)
 
 
-@app.route('/auth/provider')
+@app.route('/auth')
 def login():
-    print 'auth provider?'
     return github.authorize(
         callback=url_for('github_callback',
                          next=request.args.get('next') or request.referrer or None,
@@ -75,10 +84,16 @@ def github_callback(resp):
     oauth_token = (resp['access_token'], '')
     session['oauth_token'] = oauth_token
     me = github.get('/user')
-    User[str(oauth_token)] = me.data
-    print "in call back"
-    print User
-    return redirect('/#!/user/{}'.format(me.data['id']))
+    User[str(oauth_token)] = {
+        'id': me.data['id'],
+        'username': me.data['login'],
+        'avatar': me.data['avatar_url'],
+        'tutorialList': [],
+        'tagList': [],
+    }
+    response = make_response(redirect('/#!/dashboard'))
+    response.set_cookie('is_authenticated', 'true')
+    return response
 
 
 @app.route('/logout')

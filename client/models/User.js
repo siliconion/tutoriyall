@@ -1,42 +1,20 @@
 var m = require("mithril")
 
 var User = {
-    id: null,
-    isLoggedIn: function () {
-        return this.id && this.username
-    },
     username: null,
-    avatar: null,
-    tutorialList: [],
-    tagList: [],
-    getUserInfo: function () {
-        console.log("get user info")
+    tutorials: [],
+    tags: [],
+    getById: function (id) {
+        console.log('get y id', id)
         return m.request({
             method: "GET",
-            url: "/me",
+            url: "/user/?user=" + id,
             withCredentials: true,
-        }).then((data) => {
-            console.log("got from get user info", data)
-            this.id = data.id
-            this.username = data.username
-            this.avatar = data.avatar
-            this.tutorialList = data.tutorialList
-            this.tagList = data.tagList
-            return true
-        }).catch((err) => {
-            console.log(err)
-            return false
-        })
-    },
-    getAllUsers: function () {
-
-    },
-    addTutorial: function(tutorial){
-        return m.request({
-            method: "PUT",
-            url: "/tutorial/" + User.current.id,
-            data: tutorial,
-            withCredentials: true,
+        }).then(function (result) {
+            console.log('cgetting user info', result)
+            // User.username = result.data.username
+            // User.tutorials = result.data.tutorials
+            // User.tags = result.data.tags
         })
     }
 }

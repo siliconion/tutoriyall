@@ -4,18 +4,21 @@ var TurotialList = require("./TutorialList")
 var User = require("../models/User")
 
 module.exports = {
+    oninit: function (vnode) {
+        console.log('user view init')
+        User.getById(vnode.attrs.id)
+    },
     view: function () {
         return m(".user", [
-            m(TurotialForm),
-            m('.tutorial-form', 'Tutorial list'),
+                m(TurotialForm),
+                m('.tutorial-form', User.tutorials.map((tutorial) => {
+                    m('.turorial-entry', [
+                        m('h3', tutorial.url),
+                        m('h5', tutorial.tags.map(tag=>m('span', tag)))
+                    ])
+                    })
+                )
             ]
         )
     }
 }
-// oninit: User.loadList,
-
-// m('.tutorial-list', User.list.map(function (user) {
-//     return m("a.user-list-item",
-//         {href: "/tutorial/" + user.id, oncreate: m.route.link},
-//         user.firstName + "?" + user.lastName)
-// }))
