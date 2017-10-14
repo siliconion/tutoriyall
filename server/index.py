@@ -1,8 +1,9 @@
 from flask import Flask, make_response, redirect, url_for, session, request, jsonify, g
 from flask_oauth import OAuth
 from os import environ
+from db import db_session
 
-User = {}
+
 
 oauth = OAuth()
 app = Flask(__name__, static_folder='../static')
@@ -21,6 +22,11 @@ github = oauth.remote_app('github',
                           consumer_secret=GITHUB_CLIENT_SECRET
                           )
 
+User = {}
+
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    db_session.remove()
 
 @app.before_request
 def before_request():
