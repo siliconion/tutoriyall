@@ -31,7 +31,7 @@ module.exports = {
                 }),
                 value: tutorial.tag
             }),
-            m("button.button[type=submit]", "Save"),
+            m("button.button[type=submit].btn", "Save"),
         ])
     }
 }

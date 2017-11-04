@@ -1,13 +1,12 @@
 from flask import Flask, make_response, redirect, url_for, session, request, jsonify, g
 from flask_oauth import OAuth
 from os import environ
-from db import db_session
-
-
+from db import db, User, Tag, Tutorial
 
 oauth = OAuth()
 app = Flask(__name__, static_folder='../static')
-
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+db.init_app(app)
 app.secret_key = environ.get('SESSION_SECRET_KEY', 'secret')
 GITHUB_CLIENT_ID = environ.get('CLIENT_ID', '')
 GITHUB_CLIENT_SECRET = environ.get('CLIENT_SECRET', '')
@@ -22,11 +21,12 @@ github = oauth.remote_app('github',
                           consumer_secret=GITHUB_CLIENT_SECRET
                           )
 
-User = {}
 
 @app.teardown_appcontext
 def shutdown_session(exception=None):
-    db_session.remove()
+    pass
+    # db_session.remove()
+
 
 @app.before_request
 def before_request():
