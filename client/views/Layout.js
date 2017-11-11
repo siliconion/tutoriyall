@@ -6,7 +6,7 @@ module.exports = {
     view: function (vnode) {
         return m(".container", [
             m(Navbar),
-            m('div', {style: "padding-top:70px;"}, [
+            m('.main', [
                 m("section", vnode.children)
             ])
         ])

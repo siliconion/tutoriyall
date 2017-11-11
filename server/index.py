@@ -52,6 +52,10 @@ def home():
 def js():
     return app.send_static_file('app.js')
 
+@app.route('/styles.css')
+def css():
+    return app.send_static_file('styles.css')
+
 
 @app.route('/user/')
 def user():

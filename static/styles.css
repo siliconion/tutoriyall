@@ -1,14 +1,94 @@
 /* styles.css */
-body,.input,.button {font:normal 16px Verdana;margin:0;}
 
-.layout {margin:10px auto;max-width:1000px;}
-.menu {margin:0 0 30px;}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+html {
 
-.user-list {list-style:none;margin:0 0 10px;padding:0;}
-.user-list-item {background:#fafafa;border:1px solid #ddd;color:#333;display:block;margin:0 0 1px;padding:8px 15px;text-decoration:none;}
-.user-list-item:hover {text-decoration:underline;}
+    font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+}
 
-.label {display:block;margin:0 0 5px;}
-.input {border:1px solid #ddd;border-radius:3px;box-sizing:border-box;display:block;margin:0 0 10px;padding:10px 15px;width:100%;}
-.button {background:#eee;border:1px solid #ddd;border-radius:3px;color:#333;display:inline-block;margin:0 0 10px;padding:10px 15px;text-decoration:none;}
-.button:hover {background:#e8e8e8;}
+.container {
+    box-sizing: border-box;
+    width: 100%;
+    background-color: #ffffDD;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar {
+    box-sizing: content-box;
+    width: 100%;
+    background-color: #E8EFF0;
+    padding: 10px;
+}
+
+.navbar-container {
+    width: 100%;
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 10px;
+}
+
+.navbar-item {
+    background-color: lavenderblush;
+    border-radius: 3px;
+    display: inline-flex;
+}
+
+.navbar-brand{
+    font-size: x-large;
+    text-decoration: none;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    min-width: 160px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    width: 100%;
+    overflow:auto
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.main {
+    background-color: #fafafa;
+    width: 100%;
+}
+
+.dashboard{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.dashboard-left{
+    flex-basis: 20%; /* default auto */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tags {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.tags-container {
+    flex-wrap: wrap
+}
